@@ -2,8 +2,9 @@
 # LLM 调用封装，支持 OpenAI 兼容接口 (阿里百炼)
 from langchain.chat_models import init_chat_model
 from langchain_core.messages import SystemMessage, HumanMessage
-from config import settings
+from agent.config import settings
 from typing import AsyncGenerator
+from loguru import logger
 
 class LLMClient:
     """LLM 调用客户端，使用 OpenAI 兼容接口"""
@@ -16,6 +17,7 @@ class LLMClient:
             api_key=settings.OPENAI_API_KEY,
             base_url=settings.OPENAI_BASE_URL,
         )
+        logger.info(f"LLM_MODEL: {self.model.model_name}")
 
     async def ainvoke(self, prompt:str, system_prompt:str = "")->str:
         """同步调用 LLM，返回文本结果"""

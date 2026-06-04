@@ -1,8 +1,19 @@
 # agent/main.py
-from fastapi import FastAPI,Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routes import router as agent_router
+from agent.api.routes import router as agent_router
 from loguru import logger
+from pathlib import Path
+import sys
+from dotenv import load_dotenv
+import uvicorn
+
+def app_dir():
+    if getattr(sys, "frozen", False):
+        return Path(sys.executable).parent
+    return Path(__file__).resolve().parent
+
+load_dotenv(app_dir() / ".env")
 
 # 创建 FastAPI 应用实例
 app = FastAPI(
@@ -41,6 +52,5 @@ async def health():
 # ==========================================
 
 if __name__ == '__main__':
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000,reload=True)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 

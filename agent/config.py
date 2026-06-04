@@ -2,12 +2,19 @@
 # 全局配置管理，从 .env 文件读取所有配置项
 
 import os
+import sys
 from pathlib import Path
 from dotenv import load_dotenv
 
-# 加载 .env 文件 (向上查找项目根目录)
-env_path = Path(__file__).resolve().parent.parent / ".env"
-load_dotenv(dotenv_path=env_path)
+# 加载 .env 文件：开发环境读取项目根目录，打包后优先读取 exe 同目录。
+def get_env_path() -> Path:
+    if getattr(sys, "frozen", False):
+        exe_env = Path(sys.executable).resolve().parent / ".env"
+        if exe_env.exists():
+            return exe_env
+    return Path(__file__).resolve().parent.parent / ".env"
+
+load_dotenv(dotenv_path=get_env_path())
 
 class Settings:
     """全局配置单例"""

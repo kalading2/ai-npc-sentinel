@@ -10,31 +10,27 @@ from agent.graph.nodes.threat_assessment import threat_assessment
 from agent.graph.nodes.tool_calling import tool_calling
 
 
-# ========== 条件路由函数 ==========
+async def threat(state: AgentState)->str:
+    threat = state.get("threat_level","low")
+    if threat == "high":
+        return "tool_calling"
+    elif threat == "medium":
+        return "action_decision"
+    elif threat == "low":
+        return "response_generation"
 
-async def route_by_intent(state: AgentState) -> str:
-    """意图识别后的路由"""
+
+async def intent(state: AgentState)->str:
     intent = state.get("intent", "chat")
     if intent == "attack":
         return "threat_assessment"
     elif intent in ["warn", "investigate"]:
         return "knowledge_retrieval"
     else:
-        # chat 直接到行动决策，省掉威胁评估
-        return "action_decision"
-
-
-async def route_by_threat(state: AgentState) -> str:
-    """威胁评估后的路由"""
-    threat = state.get("threat_level", "low")
-    if threat == "high":
-        return "tool_calling"
-    else:
-        # medium 和 low 都直接行动决策
-        return "action_decision"
-
+        return "response_generation"
 
 def build_agent_graph() -> StateGraph:
+    """构建最简单的 LangGraph 图：仅包含意图识别节点"""
     builder = StateGraph(AgentState)
 
     # ========== 添加节点 ==========
@@ -50,7 +46,7 @@ def build_agent_graph() -> StateGraph:
     # ========== 定义流转 ==========
     builder.add_conditional_edges(
         "intent_recognition",
-        route_by_intent,
+        intent,
         {
             "threat_assessment": "threat_assessment",
             "knowledge_retrieval": "knowledge_retrieval",
@@ -64,7 +60,7 @@ def build_agent_graph() -> StateGraph:
     # 威胁评估后 → 根据等级分支
     builder.add_conditional_edges(
         "threat_assessment",
-        route_by_threat,
+        threat,
         {
             "tool_calling": "tool_calling",
             "action_decision": "action_decision",

@@ -1,6 +1,6 @@
 # agent/graph/intent_recognition.py
 from agent.graph.state import AgentState
-from config import settings
+from agent.config import settings
 from agent.llm.llm_client import llm_client
 
 INTENT_PROMPT = """你是一名经验丰富的城堡守卫。

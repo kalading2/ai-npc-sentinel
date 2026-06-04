@@ -2,7 +2,7 @@
 # FastAPI 路由定义 (先放骨架，后面接入 LangGraph)
 from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
-from api.schemas import PerceptionRequest, DecisionResponse, ErrorResponse
+from agent.api.schemas import PerceptionRequest, DecisionResponse, ErrorResponse
 from agent.llm.llm_client import llm_client
 from agent.memory.short_term import memory
 from agent.graph.builder import build_agent_graph

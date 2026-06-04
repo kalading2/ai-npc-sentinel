@@ -1,0 +1,16 @@
+build/ai-npc-sentinel/ai-npc-sentinel.exe
+build/ai-npc-sentinel/ai-npc-sentinel.pkg
+build/ai-npc-sentinel/Analysis-00.toc
+build/ai-npc-sentinel/base_library.zip
+build/ai-npc-sentinel/COLLECT-00.toc
+build/ai-npc-sentinel/EXE-00.toc
+build/ai-npc-sentinel/localpycs/pyimod01_archive.pyc
+build/ai-npc-sentinel/localpycs/pyimod02_importers.pyc
+build/ai-npc-sentinel/localpycs/pyimod03_ctypes.pyc
+build/ai-npc-sentinel/localpycs/pyimod04_pywin32.pyc
+build/ai-npc-sentinel/localpycs/struct.pyc
+build/ai-npc-sentinel/PKG-00.toc
+build/ai-npc-sentinel/PYZ-00.pyz
+build/ai-npc-sentinel/PYZ-00.toc
+build/ai-npc-sentinel/warn-ai-npc-sentinel.txt
+build/ai-npc-sentinel/xref-ai-npc-sentinel.html
